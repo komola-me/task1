@@ -39,8 +39,8 @@ cd django-telegram-bot
 
 Create virtual environment (optional)
 ``` bash
-python3 -m venv dtb_venv
-source dtb_venv/bin/activate
+python3 -m venv core_venv
+source core_venv/bin/activate
 ```
 
 Install all requirements:

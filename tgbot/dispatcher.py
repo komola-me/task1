@@ -6,15 +6,16 @@ import logging
 from typing import Dict
 
 import telegram.error
-from telegram import Bot, Update, BotCommand
+from telegram import Bot, InlineQuery, Update, BotCommand
 from telegram.ext import (
     Updater, Dispatcher, Filters,
     CommandHandler, MessageHandler,
-    CallbackQueryHandler,
+    CallbackQueryHandler, InlineQueryHandler
 )
+from tgbot.handlers.post.handlers.handlers import post_search
 
-from dtb.celery import app  # event processing in async mode
-from dtb.settings import TELEGRAM_TOKEN, DEBUG
+from core.celery import app  # event processing in async mode
+from core.settings import TELEGRAM_TOKEN, DEBUG
 
 from tgbot.handlers.utils import files, error
 from tgbot.handlers.admin import handlers as admin_handlers
@@ -30,6 +31,8 @@ def setup_dispatcher(dp):
     """
     Adding handlers for events from Telegram
     """
+
+    dp.add_handler(InlineQueryHandler(post_search))
     # onboarding
     dp.add_handler(CommandHandler("start", onboarding_handlers.command_start))
 
